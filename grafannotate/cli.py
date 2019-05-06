@@ -10,15 +10,18 @@ try:
 except ImportError:
     from urlparse import urlparse
 
+
 @click.command()
 @click.option('-u', '--uri', 'annotate_uri',
-    default='http://localhost:3000/api/annotations', help='uri to send annotation to')
+              default='http://localhost:3000/api/annotations',
+              help='uri to send annotation to')
 @click.option('-T', '--title', 'title', default='event', help='event title')
 @click.option('-t', '--tag', 'tags', multiple=True, help='event tags')
 @click.option('-d', '--description', 'description', help='event description')
-@click.option('-s', '--start', 'start_time', default=int(round(time.time() * 1000)), help='event start timestamp (unix secs)')
+@click.option('-s', '--start', 'start_time',
+              default=int(round(time.time() * 1000)),
+              help='event start timestamp (unix secs)')
 @click.option('-e', '--end', 'end_time', default=0, help='event end timestamp (unix secs)')
-
 def main(annotate_uri, title, tags, description, start_time, end_time):
     """ Send Grafana annotations """
 
@@ -54,14 +57,15 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
 
         else:
             raise NotImplementedError('Scheme %s not recognised in uri %s' %
-                (url_parts.scheme, annotate_uri))
+                                      (url_parts.scheme, annotate_uri))
 
     except Exception as e:
         logging.fatal(e)
-        # We could exit 1 here but we really don't want to cause a job to
-        # fail just because we couldn't send an event.
+        """ We could exit 1 here but we really don't want to cause a job to
+            fail just because we couldn't send an event. """
 
     sys.exit(0)
+
 
 def send_web_annotation(url_parts, event_data):
     """ POST event to an endpoint in Grafana Annotations API format """
@@ -84,6 +88,7 @@ def send_web_annotation(url_parts, event_data):
 
     if 'message' in post_result:
         logging.info(post_result.message)
+
 
 def send_influx_annotation(url_parts, event_data):
     raise NotImplementedError('Influx annotations not yet implemented, check back soon.')
