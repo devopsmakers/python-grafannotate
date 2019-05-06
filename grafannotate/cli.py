@@ -70,7 +70,6 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
 def send_web_annotation(url_parts, event_data):
     """ POST event to an endpoint in Grafana Annotations API format """
     logging.info('Sending web event to %s' % url_parts.hostname)
-    #logging.debug(json.dumps(event_data))
 
     url = url_parts.geturl()
     auth_tuple = None
@@ -81,7 +80,7 @@ def send_web_annotation(url_parts, event_data):
         url = '%s://%s%s' % (url_parts.scheme, url_host_port, url_parts.path)
 
     post_result = requests.post(url, json=json.dumps(event_data),
-        auth=auth_tuple, timeout=5)
+                                auth=auth_tuple, timeout=5)
 
     if post_result.status_code > 299:
         logging.error('Received %s response, sending event failed' % post_result.status_code)
