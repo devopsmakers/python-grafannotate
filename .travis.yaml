@@ -1,0 +1,27 @@
+sudo: false
+language: python
+python:
+- 2.7
+- 3.4
+- 3.6
+- 3.7-dev
+matrix:
+  include:
+  - python: 3.6
+    env: TOXENV=flake8
+install:
+- pip install tox-travis
+- pip install coveralls
+script:
+- tox
+after_success: coveralls
+
+deploy:
+  provider: pypi
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
+  user: timbirk
+  password:
+    secure: HSxKxtAuR5ck6T/pbCwEBr346PdAkG5VE9t907K3fnKOChBUWdANRqHTmo3lw9TtfuoIfFhHpvMPF65tE/9OLiUl/hpzOHeZeB50rYq8XkGcPTYyjAyrCjDZ91/yHfOZMzG/sUgbT/37c0nf7LzYCLz+hlcQ1Xt9+GzAqKZ80cR/hZCYZmSSmgr6PNJEaZYYtD/MQnGB/gN5Rvefnj+ijVBB78GUxhxu0Ro9uO9IyaJSb8Fm6nJIgmiY8sXEenFxv9h43m4b4oRrv0kj+19b0ekYBj/ECJzPvYejiiJnb+cXtOcSfQlhH2kWgK0rxa2AmvwH0/9n4wwF5A8lvxls+Wh6NP/t5GSUe4VSduzNcV/CMfIytbXuShNPfAHLEPDZ/uGlj/e83VbNAAADocJl745U+B08k3f0J9x2n5Gm6gzbzWzkMn5DJTrqwYHtsdFkJKffdTFE5xpu6JBcL24I17n/j9t3ADibnnSN3L9TYOXSIiqWFEboP6Vl3tGbSHu+TiQgl/LuZ4XkiB9Cakcj0WPUvus0+0BuqDtrzUsy5cpSuaVGK8wTyJHdgMdwgNkNI3YwWHQt89nSQDGwZPAkdAsPLwukYl6s/6PtKMl9gblONN8JMm4Zpww0X5/wpwiUwwrRVEEyyTiI7dtqdgCMxeYgBrb8UX6aDqX5KlD6Jd4=
+  on:
+    tags: true
