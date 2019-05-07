@@ -33,6 +33,9 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
         else:
             description = ""
 
+    if len(tags) == 0:
+        raise Exception('Events must have at least one tag.')
+
     tags_field = ';'.join(tags)
 
     try:
@@ -45,7 +48,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
             event_data['time'] = int(round(start_time * 1000))
             if end_time > 0:
                 if end_time < start_time:
-                    raise Exception('Event end time cannot be before start time')
+                    raise Exception('Event end time cannot be before start time.')
                 event_data['isRegion'] = True
                 event_data['timeEnd'] = int(round(end_time * 1000))
 
