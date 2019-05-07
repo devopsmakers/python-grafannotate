@@ -27,18 +27,18 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
 
     logging.basicConfig(format='[%(levelname)s] %(message)s', level=logging.INFO)
 
-    if description is None:
-        if not sys.stdin.isatty():
-            description = "".join([line for line in iter(sys.stdin.readline, '')])
-        else:
-            description = ""
-
-    if len(tags) == 0:
-        raise Exception('Events must have at least one tag.')
-
-    tags_field = ';'.join(tags)
-
     try:
+        if description is None:
+            if not sys.stdin.isatty():
+                description = "".join([line for line in iter(sys.stdin.readline, '')])
+            else:
+                description = ""
+
+        if len(tags) == 0:
+            raise Exception('Events must have at least one tag.')
+
+        tags_field = ';'.join(tags)
+        
         url_parts = urlparse(annotate_uri)
         event_data = {}
 
