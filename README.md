@@ -6,7 +6,7 @@
 
 A CLI tool to send Grafana annotations to various destinations.
 
-## Installation
+## Installation
 ```
 pip install grafannotate
 ```
