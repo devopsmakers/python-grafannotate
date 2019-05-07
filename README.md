@@ -44,7 +44,7 @@ grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_ta
 
 3. Send an annotation to Grafana API with an extended description
 ```
-grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --description 'Some longer description\nwith newlines\n<a href="https://something.com/">hyperlinks</a>'
+grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --description "Some longer description\nwith newlines\n<a href=\"https://something.com/\">hyperlinks</a>"
 ```
 
 4. Pipe output to an annotation description
