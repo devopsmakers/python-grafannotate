@@ -84,14 +84,13 @@ def send_web_annotation(url_parts, event_data):
         url_host_port = url_parts.netloc.split('@')[1]
         url = '%s://%s%s' % (url_parts.scheme, url_host_port, url_parts.path)
 
-    post_result = requests.post(url, json=json.dumps(event_data),
-                                auth=auth_tuple, timeout=5)
+    post_result = requests.post(url, json=event_data, auth=auth_tuple, timeout=5)
 
     if post_result.status_code > 299:
         logging.error('Received %s response, sending event failed' % post_result.status_code)
 
-    if 'message' in post_result:
-        logging.info(post_result.message)
+    if 'message' in post_result.json():
+        logging.info(post_result.json()['message'])
 
 
 def send_influx_annotation(url_parts, event_data):
