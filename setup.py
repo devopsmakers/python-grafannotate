@@ -16,7 +16,7 @@ dependencies = [
 
 setup(
     name='grafannotate',
-    version='0.0.8',
+    version='0.0.9',
     url='https://github.com/devopsmakers/python-grafannotate',
     license='MIT',
     author='Tim Birkett',
