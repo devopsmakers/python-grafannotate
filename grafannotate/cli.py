@@ -28,7 +28,10 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
     logging.basicConfig(format='[%(levelname)s] %(message)s', level=logging.INFO)
 
     if description is None:
-        description = "".join([line for line in iter(sys.stdin.readline, '')])
+        if not sys.stdin.isatty():
+            description = "".join([line for line in iter(sys.stdin.readline, '')])
+        else:
+            description = ""
 
     tags_field = ';'.join(tags)
 
@@ -46,6 +49,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
                 event_data['isRegion'] = True
                 event_data['timeEnd'] = end_time
 
+            logging.debug(event_data)
             send_web_annotation(url_parts, event_data)
 
         elif 'influx' in url_parts.scheme:
@@ -53,6 +57,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
             event_data['columns'] = ['tags', 'text', 'title']
             event_data['points'] = [[tags_field, description, title]]
 
+            logging.debug(event_data)
             send_influx_annotation(url_parts, event_data)
 
         else:
