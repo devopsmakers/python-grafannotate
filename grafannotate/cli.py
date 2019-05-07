@@ -38,7 +38,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
             raise Exception('Events must have at least one tag.')
 
         tags_field = ';'.join(tags)
-        
+
         url_parts = urlparse(annotate_uri)
         event_data = {}
 
