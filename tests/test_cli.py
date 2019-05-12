@@ -15,8 +15,7 @@ def test_cli(runner, caplog):
     assert 'Events must have at least one tag' in caplog.text
 
 
-def test_cli_with_tag(runner, caplog, monkeypatch):
-    monkeypatch.setattr(sys.stdin, 'isatty', True)
+def test_cli_with_tag(runner, caplog):
     result = runner.invoke(cli.main, ['--tag', 'event'])
     assert result.exit_code == 0
     assert 'NewConnectionError' in caplog.text
@@ -32,3 +31,15 @@ def test_cli_with_bad_uri(runner, caplog):
     result = runner.invoke(cli.main, ['--tag', 'event', '--uri', 'blob://localhost'])
     assert result.exit_code == 0
     assert 'Scheme blob not recognised' in caplog.text
+
+
+def test_cli_with_user_pass(runner, caplog):
+    result = runner.invoke(cli.main, ['--tag', 'event', '--uri', 'http://user:pass@localhost'])
+    assert result.exit_code == 0
+    assert 'NewConnectionError' in caplog.text
+
+
+def test_cli_with_influx(runner, caplog):
+    result = runner.invoke(cli.main, ['--tag', 'event', '--uri', 'influx://localhost:8086'])
+    assert result.exit_code == 0
+    assert 'Influx annotations not yet implemented' in caplog.text
