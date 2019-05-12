@@ -1,4 +1,5 @@
 import pytest
+import sys
 from click.testing import CliRunner
 from grafannotate import cli
 
@@ -15,6 +16,7 @@ def test_cli(runner, caplog):
 
 
 def test_cli_with_tag(runner, caplog):
+    monkeypatch.setattr(sys.stdin, 'isatty', True)
     result = runner.invoke(cli.main, ['--tag', 'event'])
     assert result.exit_code == 0
     assert 'NewConnectionError' in caplog.text

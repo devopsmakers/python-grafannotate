@@ -29,6 +29,7 @@ setup(
     zip_safe=False,
     platforms='any',
     install_requires=dependencies,
+    tests_require=['pytest', 'mock', 'flake8'],
     entry_points={
         'console_scripts': [
             'grafannotate = grafannotate.cli:main',
