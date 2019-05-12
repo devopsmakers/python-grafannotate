@@ -50,5 +50,5 @@ grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_ta
 4. Pipe output to an annotation description
 ```
 START_TIME=`date +%s`
-git log -1 | grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --start $START_TIME --end `date +%s`
+command_with_output | grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --start $START_TIME
 ```
