@@ -24,10 +24,15 @@ CURRENT_TIMESTAMP = int(time.time())
               help='Start timestamp (unix secs). Default: current timestamp.')
 @click.option('-e', '--end', 'end_time', default=CURRENT_TIMESTAMP,
               help='End timestamp (unix secs). Optional.')
-def main(annotate_uri, title, tags, description, start_time, end_time):
+@click.option('--debug/--no-debug', default=False)
+def main(annotate_uri, title, tags, description, start_time, end_time, debug):
     """ Send Grafana annotations """
 
-    logging.basicConfig(format='[%(levelname)s] %(message)s', level=logging.INFO)
+    log_level = logging.INFO
+    if debug:
+        log_level = logging.DEBUG
+
+    logging.basicConfig(format='[%(levelname)s] %(message)s', level=log_level)
 
     try:
         if description is None:
@@ -54,7 +59,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
                 event_data['isRegion'] = True
                 event_data['timeEnd'] = int(round(end_time * 1000))
 
-            logging.debug(event_data)
+            logging.debug(json.dumps(event_data))
             send_web_annotation(url_parts, event_data)
 
         elif 'influx' in url_parts.scheme:
