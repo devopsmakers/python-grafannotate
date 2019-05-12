@@ -1,5 +1,4 @@
 import pytest
-import sys
 from click.testing import CliRunner
 from grafannotate import cli
 
