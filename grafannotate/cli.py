@@ -10,6 +10,8 @@ try:
 except ImportError:
     from urlparse import urlparse
 
+CURRENT_TIMESTAMP = int(time.time())
+
 
 @click.command()
 @click.option('-u', '--uri', 'annotate_uri',
@@ -18,10 +20,10 @@ except ImportError:
 @click.option('-T', '--title', 'title', default='event', help='Event title. Default: "event".')
 @click.option('-t', '--tag', 'tags', multiple=True, help='Event tags (can be used multiple times).')
 @click.option('-d', '--description', 'description', help='Event description body. Optional.')
-@click.option('-s', '--start', 'start_time',
-              default=int(time.time()),
+@click.option('-s', '--start', 'start_time', default=CURRENT_TIMESTAMP,
               help='Start timestamp (unix secs). Default: current timestamp.')
-@click.option('-e', '--end', 'end_time', default=0, help='End timestamp (unix secs). Optional.')
+@click.option('-e', '--end', 'end_time', default=CURRENT_TIMESTAMP,
+              help='End timestamp (unix secs). Optional.')
 def main(annotate_uri, title, tags, description, start_time, end_time):
     """ Send Grafana annotations """
 
@@ -46,7 +48,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time):
             event_data['text'] = '<b>%s</b>\n\n%s' % (title, description)
             event_data['tags'] = tags
             event_data['time'] = int(round(start_time * 1000))
-            if end_time > 0:
+            if end_time != start_time:
                 if end_time < start_time:
                     raise Exception('Event end time cannot be before start time.')
                 event_data['isRegion'] = True

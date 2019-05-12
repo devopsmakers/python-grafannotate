@@ -18,3 +18,15 @@ def test_cli_with_tag(runner, caplog):
     result = runner.invoke(cli.main, ['--tag', 'event'])
     assert result.exit_code == 0
     assert 'NewConnectionError' in caplog.text
+
+
+def test_cli_with_bad_end_time(runner, caplog):
+    result = runner.invoke(cli.main, ['--tag', 'event', '--end', 0])
+    assert result.exit_code == 0
+    assert 'end time cannot be before start time' in caplog.text
+
+
+def test_cli_with_bad_uri(runner, caplog):
+    result = runner.invoke(cli.main, ['--tag', 'event', '--uri', 'blob://localhost'])
+    assert result.exit_code == 0
+    assert 'Scheme blob not recognised' in caplog.text
