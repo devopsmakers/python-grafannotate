@@ -15,7 +15,7 @@ def test_cli(runner, caplog):
     assert 'Events must have at least one tag' in caplog.text
 
 
-def test_cli_with_tag(runner, caplog):
+def test_cli_with_tag(runner, caplog, monkeypatch):
     monkeypatch.setattr(sys.stdin, 'isatty', True)
     result = runner.invoke(cli.main, ['--tag', 'event'])
     assert result.exit_code == 0
