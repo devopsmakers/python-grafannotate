@@ -1,6 +1,10 @@
 import pytest
+import time
+
 from click.testing import CliRunner
 from grafannotate import cli
+
+CURRENT_TIMESTAMP = int(time.time())
 
 
 @pytest.fixture
@@ -11,7 +15,7 @@ def runner():
 def test_cli(runner, caplog):
     result = runner.invoke(cli.main)
     assert result.exit_code == 0
-    assert 'Events must have at least one tag' in caplog.text
+    assert 'must have at least one tag' in caplog.text
 
 
 def test_cli_with_tag(runner, caplog):
@@ -38,7 +42,13 @@ def test_cli_with_user_pass(runner, caplog):
     assert 'NewConnectionError' in caplog.text
 
 
+def test_cli_with_end_time(runner, caplog):
+    result = runner.invoke(cli.main, ['--tag', 'event', '--end', CURRENT_TIMESTAMP + 600])
+    assert result.exit_code == 0
+    assert 'NewConnectionError' in caplog.text
+
+
 def test_cli_with_influx(runner, caplog):
     result = runner.invoke(cli.main, ['--tag', 'event', '--uri', 'influx://localhost:8086'])
     assert result.exit_code == 0
-    assert 'Influx annotations not yet implemented' in caplog.text
+    assert 'NewConnectionError' in caplog.text
