@@ -40,7 +40,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time, debug):
 
         this_annotation = Annotation(title, tags, description, start_time, end_time)
         result = this_annotation.send(annotate_uri)
-        logging.info('test')
+
         if result['event_data']:
             logging.debug(result['event_data'])
         if result['message']:
