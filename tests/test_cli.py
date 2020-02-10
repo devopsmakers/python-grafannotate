@@ -42,6 +42,12 @@ def test_cli_with_user_pass(runner, caplog):
     assert 'NewConnectionError' in caplog.text
 
 
+def test_cli_with_api_key(runner, caplog):
+    result = runner.invoke(cli.main, ['--tag', 'event', '--uri', 'http://localhost', '--api-key', 'aTestKey'])
+    assert result.exit_code == 0
+    assert 'NewConnectionError' in caplog.text
+
+
 def test_cli_with_end_time(runner, caplog):
     result = runner.invoke(cli.main, ['--tag', 'event', '--end', CURRENT_TIMESTAMP + 600])
     assert result.exit_code == 0

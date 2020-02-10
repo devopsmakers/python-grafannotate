@@ -84,7 +84,7 @@ def test_annotation_send_to_web():
 
 def test_annotation_send_to_web_with_api_key():
     url = "http://localhost:3000/api/annotations"
-    api_key ="307c1ac4-4e7c-4eb4-a56f-3547eeff0e4b"
+    api_key = "307c1ac4-4e7c-4eb4-a56f-3547eeff0e4b"
     with requests_mock.Mocker() as m:
         m.register_uri(
             requests_mock.POST,
