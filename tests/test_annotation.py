@@ -107,7 +107,7 @@ def test_annotation_send_to_influxdb(mock_influxdbclient):
     url = "influx://user:pass@localhost"
     test_annotation = Annotation('event', ['test'], 'testing')
     mock_influxdbclient.write_points.return_value = True
-    assert test_annotation.send(url) == {
+    assert test_annotation.send(url, None) == {
         'event_data': [{
             'fields': {
                 'tags': 'test',
