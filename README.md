@@ -17,11 +17,12 @@ pip install grafannotate
 grafannotate --help
 Usage: grafannotate [OPTIONS]
 
-  Send Grafana annotations
+  Send Grafana annotations to various endpoints
 
 Options:
   -u, --uri TEXT          URI to send annotation to. Default:
                           "http://localhost:3000/api/annotations".
+  -k, --api-key TEXT      Grafana API key to pass in Authorisation header
   -T, --title TEXT        Event title. Default: "event".
   -t, --tag TEXT          Event tags (can be used multiple times).
   -d, --description TEXT  Event description body. Optional.
@@ -51,4 +52,10 @@ grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_ta
 ```
 START_TIME=`date +%s`
 command_with_output | grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --start $START_TIME
+```
+
+5. Send an annotation to Grafana API using Authorization header
+```
+GRAFANA_API_TOKEN="some_generated_api_token"
+grafannotate --uri http://grafana:3000/api/annotations --tag my_tag --title "Event Title" --api-key $GRAFANA_API_TOKEN
 ```
