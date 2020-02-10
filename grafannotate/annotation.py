@@ -77,7 +77,7 @@ class Annotation:
         auth_tuple = None
         req_headers = {}
         if api_key is not None:
-            req_headers['Authorisation'] = "Bearer %s" % api_key
+            req_headers['Authorization'] = "Bearer %s" % api_key
 
         if url_parts.username and url_parts.password:
             auth_tuple = (url_parts.username, url_parts.password)
