@@ -54,13 +54,13 @@ class Annotation:
         }
         return [annotation_event]
 
-    def send(self, url):
+    def send(self, url, api_key):
         """
         Send the annotation to a destination based on url
         """
         url_parts = urlparse(url)
         if 'http' in url_parts.scheme:
-            return self.send_to_web(url_parts)
+            return self.send_to_web(url_parts, api_key)
         elif 'influx' in url_parts.scheme:
             return self.send_to_influxdb(url_parts)
         else:
@@ -75,13 +75,16 @@ class Annotation:
         result_data = {'event_data': event_data}
         url = url_parts.geturl()
         auth_tuple = None
+        req_headers = {}
+        if api_key is not None:
+            req_headers['Authorisation'] = "Bearer %s" % api_key
 
         if url_parts.username and url_parts.password:
             auth_tuple = (url_parts.username, url_parts.password)
             url_host_port = url_parts.netloc.split('@')[1]
             url = '%s://%s%s' % (url_parts.scheme, url_host_port, url_parts.path)
 
-        post_result = requests.post(url, json=event_data, auth=auth_tuple, timeout=5)
+        post_result = requests.post(url, json=event_data, auth=auth_tuple, headers=req_headers, timeout=5)
 
         if post_result.status_code > 299:
             raise Exception('Received %s response, sending event failed' % post_result.status_code)

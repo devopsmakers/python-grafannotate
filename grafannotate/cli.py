@@ -12,6 +12,8 @@ CURRENT_TIMESTAMP = int(time.time())
 @click.option('-u', '--uri', 'annotate_uri',
               default='http://localhost:3000/api/annotations',
               help='URI to send annotation to. Default: "http://localhost:3000/api/annotations".')
+@click.option('-k', '--api-key', 'api_key', default=None,
+              help='Grafana API key to pass in Authorisation header')
 @click.option('-T', '--title', 'title', default='event', help='Event title. Default: "event".')
 @click.option('-t', '--tag', 'tags', multiple=True, help='Event tags (can be used multiple times).')
 @click.option('-d', '--description', 'description', help='Event description body. Optional.')
@@ -20,7 +22,7 @@ CURRENT_TIMESTAMP = int(time.time())
 @click.option('-e', '--end', 'end_time', default=CURRENT_TIMESTAMP,
               help='End timestamp (unix secs). Optional.')
 @click.option('--debug/--no-debug', default=False)
-def main(annotate_uri, title, tags, description, start_time, end_time, debug):
+def main(annotate_uri, api_key, title, tags, description, start_time, end_time, debug):
     """
     Send Grafana annotations to various endpoints
     """
@@ -39,7 +41,7 @@ def main(annotate_uri, title, tags, description, start_time, end_time, debug):
                 description = ""
 
         this_annotation = Annotation(title, tags, description, start_time, end_time)
-        result = this_annotation.send(annotate_uri)
+        result = this_annotation.send(annotate_uri, api_key)
 
         if result['event_data']:
             logging.debug(result['event_data'])
