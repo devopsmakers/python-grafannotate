@@ -57,7 +57,7 @@ def test_annotation_fail_to_send_to_web():
     url = "http://user:pass@localhost"
     test_annotation = Annotation('event', ['test'], 'testing')
     with pytest.raises(Exception, match='NewConnectionError'):
-        test_annotation.send(url)
+        test_annotation.send(url, None)
 
 
 def test_annotation_send_to_web():
@@ -70,7 +70,7 @@ def test_annotation_send_to_web():
             json={'message': 'Annotation added'}
         )
         test_annotation = Annotation('event', ['test'], 'testing', 1559332960, 1559332970)
-        assert test_annotation.send(url) == {
+        assert test_annotation.send(url, None) == {
             'event_data': {
                 'isRegion': True,
                 'tags': ['test'],
@@ -92,14 +92,14 @@ def test_annotation_error_sending_to_web():
         )
         test_annotation = Annotation('event', ['test'], 'testing', 1559332960, 1559332960)
         with pytest.raises(Exception, match='Received 400 response, sending event failed'):
-            test_annotation.send(url)
+            test_annotation.send(url, None)
 
 
 def test_annotation_fail_to_send_to_influxdb():
     url = "influx://user:pass@localhost"
     test_annotation = Annotation('event', ['test'], 'testing')
     with pytest.raises(Exception, match='Failed to establish a new connection'):
-        test_annotation.send(url)
+        test_annotation.send(url, None)
 
 
 @mock.patch('grafannotate.annotation.InfluxDBClient')
@@ -124,4 +124,4 @@ def test_annotation_send_bad_url():
     url = "s3://user:pass@localhost"
     test_annotation = Annotation('event', ['test'], 'testing')
     with pytest.raises(NotImplementedError, match='Scheme s3 not recognised'):
-        test_annotation.send(url)
+        test_annotation.send(url, None)
