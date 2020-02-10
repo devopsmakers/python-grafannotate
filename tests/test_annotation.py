@@ -81,17 +81,20 @@ def test_annotation_send_to_web():
             'message': 'Annotation added'
         }
 
+
 def test_annotation_send_to_web_with_api_key():
     url = "http://localhost:3000/api/annotations"
+    api_key ="307c1ac4-4e7c-4eb4-a56f-3547eeff0e4b"
     with requests_mock.Mocker() as m:
         m.register_uri(
             requests_mock.POST,
             url,
+            request_headers={'Authorization': "Bearer %s" % api_key},
             status_code=200,
             json={'message': 'Annotation added'}
         )
         test_annotation = Annotation('event', ['test'], 'testing', 1559332960, 1559332970)
-        assert test_annotation.send(url, 'aTestKey') == {
+        assert test_annotation.send(url, api_key) == {
             'event_data': {
                 'isRegion': True,
                 'tags': ['test'],
@@ -101,6 +104,7 @@ def test_annotation_send_to_web_with_api_key():
             },
             'message': 'Annotation added'
         }
+
 
 def test_annotation_error_sending_to_web():
     url = "http://localhost:3000/api/annotations"
