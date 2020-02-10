@@ -67,7 +67,7 @@ class Annotation:
             raise NotImplementedError('Scheme %s not recognised in uri %s' %
                                       (url_parts.scheme, url))
 
-    def send_to_web(self, url_parts):
+    def send_to_web(self, url_parts, api_key):
         """
         POST event to an endpoint in Grafana Annotations API format
         """
