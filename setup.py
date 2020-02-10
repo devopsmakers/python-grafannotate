@@ -10,14 +10,14 @@ import codecs
 from setuptools import find_packages, setup
 
 dependencies = [
-    'click==6.7',
-    'requests==2.21.0',
-    'influxdb==5.2.2'
+    'click==7.0',
+    'requests==2.22.0',
+    'influxdb==5.2.3'
 ]
 
 setup(
     name='grafannotate',
-    version='0.2.0',
+    version='0.2.2',
     url='https://github.com/devopsmakers/python-grafannotate',
     license='MIT',
     author='Tim Birkett',
