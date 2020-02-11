@@ -39,7 +39,7 @@ def test_cli_with_debug_mock(mock_send, runner, caplog):
         'message': 'Annotation added'
     }
     mock_send.return_value = return_data
-    result = runner.invoke(cli.main, ['--tag', 'event'])
+    result = runner.invoke(cli.main, ['--tag', 'event', '--debug'])
     assert result.exit_code == 0
 
 
