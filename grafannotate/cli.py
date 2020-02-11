@@ -21,7 +21,8 @@ CURRENT_TIMESTAMP = int(time.time())
               help='Start timestamp (unix secs). Default: current timestamp.')
 @click.option('-e', '--end', 'end_time', default=CURRENT_TIMESTAMP,
               help='End timestamp (unix secs). Optional.')
-@click.option('--debug/--no-debug', default=False)
+@click.option('--debug/--no-debug', default=False,
+              help='Set debug logging on')
 def main(annotate_uri, api_key, title, tags, description, start_time, end_time, debug):
     """
     Send Grafana annotations to various endpoints

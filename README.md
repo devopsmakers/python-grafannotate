@@ -33,28 +33,28 @@ Options:
   ```
 
 ### Examples
-1. Send an annotation to Grafana API for current time
+- Send an annotation to Grafana API for current time
 ```
 grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title"
 ```
 
-2. Send an annotation to Grafana API for a time region
+- Send an annotation to Grafana API for a time region
 ```
 grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --start 1557222057 --end 1557222259
 ```
 
-3. Send an annotation to Grafana API with an extended description
+- Send an annotation to Grafana API with an extended description
 ```
 grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --description "Some longer description<br />with newlines<br />and <a href=\"https://something.com/\">links</a>"
 ```
 
-4. Pipe output to an annotation description
+- Pipe output to an annotation description
 ```
 START_TIME=`date +%s`
 command_with_output | grafannotate --uri http://user:password@grafana:3000/api/annotations --tag my_tag --title "Event Title" --start $START_TIME
 ```
 
-5. Send an annotation to Grafana API using Authorization header
+- Send an annotation to Grafana API using Authorization header
 ```
 GRAFANA_API_TOKEN="some_generated_api_token"
 grafannotate --uri http://grafana:3000/api/annotations --tag my_tag --title "Event Title" --api-key $GRAFANA_API_TOKEN

@@ -1,5 +1,7 @@
 import pytest
 import time
+import mock
+import sys
 
 from click.testing import CliRunner
 from grafannotate import cli
@@ -20,6 +22,30 @@ def test_cli(runner, caplog):
 
 def test_cli_with_tag(runner, caplog):
     result = runner.invoke(cli.main, ['--tag', 'event'])
+    assert result.exit_code == 0
+    assert 'NewConnectionError' in caplog.text
+
+
+@mock.patch('grafannotate.cli.Annotation.send', autospec=True)
+def test_cli_with_debug_mock(mock_send, runner, caplog):
+    return_data = {
+        'event_data': {
+            'isRegion': True,
+            'tags': ['test'],
+            'text': '<b>event</b>\n\ntesting',
+            'time': 1559332960000,
+            'timeEnd': 1559332970000
+        },
+        'id': '12345',
+        'message': 'Annotation added'
+    }
+    mock_send.return_value = return_data
+    result = runner.invoke(cli.main, ['--tag', 'event'])
+    assert result.exit_code == 0
+
+
+def test_cli_with_debug(runner, caplog):
+    result = runner.invoke(cli.main, ['--tag', 'event', '--debug'])
     assert result.exit_code == 0
     assert 'NewConnectionError' in caplog.text
 

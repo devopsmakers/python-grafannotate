@@ -17,7 +17,7 @@ dependencies = [
 
 setup(
     name='grafannotate',
-    version='0.2.2',
+    version='0.3.0',
     url='https://github.com/devopsmakers/python-grafannotate',
     license='MIT',
     author='Tim Birkett',
@@ -37,22 +37,14 @@ setup(
     },
     classifiers=[
         # As from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-        # 'Development Status :: 1 - Planning',
-        # 'Development Status :: 2 - Pre-Alpha',
-        # 'Development Status :: 3 - Alpha',
-        'Development Status :: 4 - Beta',
-        # 'Development Status :: 5 - Production/Stable',
-        # 'Development Status :: 6 - Mature',
-        # 'Development Status :: 7 - Inactive',
+        'Development Status :: 5 - Production/Stable',
         'Topic :: Utilities',
         'Environment :: Console',
-        #'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        #'Topic :: Software Development :: Libraries :: Python Modules',
     ]
 )
