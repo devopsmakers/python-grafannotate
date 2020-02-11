@@ -1,6 +1,7 @@
 import pytest
 import time
 import mock
+import logging
 
 from click.testing import CliRunner
 from grafannotate import cli
@@ -39,9 +40,11 @@ def test_cli_with_debug_mock(mock_send, runner, caplog):
         'message': 'Annotation added'
     }
     mock_send.return_value = return_data
-    result = runner.invoke(cli.main, ['--tag', 'event', '--debug'])
+    caplog.set_level('DEBUG')
+    result = runner.invoke(cli.main, ['--tag', 'event'])
     assert result.exit_code == 0
-    assert 'something' == caplog.text
+    assert return_data['message'] in caplog.text
+    assert str(return_data['event_data']) in caplog.text
 
 
 def test_cli_with_debug(runner, caplog):
