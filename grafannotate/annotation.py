@@ -85,6 +85,9 @@ class Annotation:
         if post_result.status_code > 299:
             raise Exception('Received %s response, sending event failed' % post_result.status_code)
 
+        if 'id' in post_result.json():
+            result_data['id'] = post_result.json()['id']
+
         if 'message' in post_result.json():
             result_data['message'] = post_result.json()['message']
 

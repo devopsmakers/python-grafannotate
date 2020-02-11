@@ -67,7 +67,7 @@ def test_annotation_send_to_web():
             requests_mock.POST,
             url,
             status_code=200,
-            json={'message': 'Annotation added'}
+            json={'message': 'Annotation added', 'id': '12345'}
         )
         test_annotation = Annotation('event', ['test'], 'testing', 1559332960, 1559332970)
         assert test_annotation.send(url, None) == {
@@ -78,6 +78,7 @@ def test_annotation_send_to_web():
                 'time': 1559332960000,
                 'timeEnd': 1559332970000
             },
+            'id': '12345',
             'message': 'Annotation added'
         }
 
@@ -126,11 +127,11 @@ def test_annotation_fail_to_send_to_influxdb():
         test_annotation.send(url, None)
 
 
-@mock.patch('grafannotate.annotation.InfluxDBClient')
-def test_annotation_send_to_influxdb(mock_influxdbclient):
+@mock.patch('influxdb.InfluxDBClient.write_points')
+def test_annotation_send_to_influxdb(mock_write_points):
     url = "influx://user:pass@localhost"
     test_annotation = Annotation('event', ['test'], 'testing')
-    mock_influxdbclient.write_points.return_value = True
+    mock_write_points.return_value = True
     assert test_annotation.send(url, None) == {
         'event_data': [{
             'fields': {
@@ -143,6 +144,22 @@ def test_annotation_send_to_influxdb(mock_influxdbclient):
         'message': 'Annotation added'
     }
 
+@mock.patch('influxdb.InfluxDBClient.write_points')
+def test_annotation_send_to_influxdb_fail(mock_write_points):
+    url = "influx://user:pass@localhost"
+    test_annotation = Annotation('event', ['test'], 'testing')
+    mock_write_points.return_value = False
+    assert test_annotation.send(url, None) == {
+        'event_data': [{
+            'fields': {
+                'tags': 'test',
+                'text': 'testing',
+                'title': 'event'
+            },
+            'measurement': 'events'
+        }],
+        'message': 'Annotation failed'
+    }
 
 def test_annotation_send_bad_url():
     url = "s3://user:pass@localhost"
