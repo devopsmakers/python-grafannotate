@@ -1,9 +1,9 @@
-#  python-publicholiday
+#  python-grafannotate
 #  ---------------
-#  A fast, efficient command line utility for working with public holidays
+#  A CLI tool to add annotations to Grafana
 #
 #  Author:  Tim Birkett <tim.birkettdev@devopsmakers.com>
-#  Website: https://github.com/devopsmakers/grafannotate
+#  Website: https://github.com/devopsmakers/python-grafannotate
 #  License: MIT License (see LICENSE file)
 
 import codecs
