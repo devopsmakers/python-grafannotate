@@ -144,6 +144,7 @@ def test_annotation_send_to_influxdb(mock_write_points):
         'message': 'Annotation added'
     }
 
+
 @mock.patch('influxdb.InfluxDBClient.write_points')
 def test_annotation_send_to_influxdb_fail(mock_write_points):
     url = "influx://user:pass@localhost"
@@ -160,6 +161,7 @@ def test_annotation_send_to_influxdb_fail(mock_write_points):
         }],
         'message': 'Annotation failed'
     }
+
 
 def test_annotation_send_bad_url():
     url = "s3://user:pass@localhost"

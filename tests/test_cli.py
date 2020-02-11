@@ -1,7 +1,6 @@
 import pytest
 import time
 import mock
-import sys
 
 from click.testing import CliRunner
 from grafannotate import cli
