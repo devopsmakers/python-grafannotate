@@ -41,6 +41,7 @@ def test_cli_with_debug_mock(mock_send, runner, caplog):
     mock_send.return_value = return_data
     result = runner.invoke(cli.main, ['--tag', 'event', '--debug'])
     assert result.exit_code == 0
+    assert 'something' == caplog.text
 
 
 def test_cli_with_debug(runner, caplog):
