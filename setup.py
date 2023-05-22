@@ -11,7 +11,7 @@ from setuptools import find_packages, setup
 
 dependencies = [
     'click==7.0',
-    'requests==2.22.0',
+    'requests==2.31.0',
     'influxdb==5.2.3'
 ]
 
